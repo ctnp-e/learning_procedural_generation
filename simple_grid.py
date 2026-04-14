@@ -31,4 +31,11 @@ def make_grid(cols: int, rows: int) -> list[list[int]]:
 
 def print_grid(grid: list[list[int]]) -> None:
     for row in grid:
-        print(' '.join(str(cell) for cell in row))
+        for cell in row:
+            if cell == 0:
+                print('.', end=' ')
+            elif cell == 1:
+                print('+', end=' ')
+            else:
+                print('#', end=' ')
+    print()  # New line at the end
