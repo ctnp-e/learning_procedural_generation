@@ -32,5 +32,3 @@ def make_grid(cols: int, rows: int) -> list[list[int]]:
 def print_grid(grid: list[list[int]]) -> None:
     for row in grid:
         print(' '.join(str(cell) for cell in row))
-
-print_grid(make_grid(20,20))
