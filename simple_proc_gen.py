@@ -1,4 +1,5 @@
-from PIL import Image
+import tkinter as tk
+from PIL import Image, ImageTk
 import random
 
 
@@ -119,19 +120,40 @@ def grid_to_image(grid: list[list[int]], scale: int) -> Image.Image:
 
     return image
 
-# basic, you don't really edit it 
-def main() -> None:
+
+
+# --- GUI ---
+
+def generate_and_draw(canvas: tk.Canvas):
+    global tk_img
+
     cols = WIDTH // SCALE
     rows = HEIGHT // SCALE
 
     grid = make_grid(cols, rows)
-
-    for i in range(SMOOTHING_PASSES):
+    for _ in range(SMOOTHING_PASSES):
         grid = smooth_grid(grid)
 
-    print (grid)
     img = grid_to_image(grid, SCALE)
-    img.show()
+
+    tk_img = ImageTk.PhotoImage(img)
+    canvas.delete("all")
+    canvas.create_image(0, 0, anchor="nw", image=tk_img)
+
+
+def main():
+    root = tk.Tk()
+    root.title("Procedural Terrain")
+
+    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
+    canvas.pack()
+
+    button = tk.Button(root, text="Regenerate", command=lambda: generate_and_draw(canvas))
+    button.pack()
+
+    generate_and_draw(canvas)
+
+    root.mainloop()
 
 
 if __name__ == "__main__":
