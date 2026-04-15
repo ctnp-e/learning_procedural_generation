@@ -103,15 +103,15 @@ def grid_to_image(grid: list[list[int]], scale: int) -> Image.Image:
 
     image = Image.new("RGB", (width, height))
     pixels = image.load()
-
+    switch = {
+        0: WATER_COLOR,
+        1: LAND_COLOR,
+        2: FOREST_COLOR
+    }
     for y in range(rows):
         for x in range(cols):
             # basic switch statement to map terrain type to color
-            switch = {
-                0: WATER_COLOR,
-                1: LAND_COLOR,
-                2: FOREST_COLOR
-            }
+            
 
             color = switch.get(grid[y][x], (0, 0, 0))
             for py in range(y * scale, (y + 1) * scale):
